@@ -1,0 +1,58 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25123.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PbzApi", "PbzApi\PbzApi.csproj", "{59CEE8CF-22DA-4637-9B95-255380AE9562}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core", "Core\Core.csproj", "{75DF3964-5534-4526-A444-9038D60443A1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Implementation", "Implementation\Implementation.csproj", "{DF228B58-ED6A-4E61-A957-D17D72A659C2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CacheAttribute", "CacheAttribute\CacheAttribute.csproj", "{437F75B6-8329-4761-A9B9-CE6A4A58DC09}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{59CEE8CF-22DA-4637-9B95-255380AE9562}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{59CEE8CF-22DA-4637-9B95-255380AE9562}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{59CEE8CF-22DA-4637-9B95-255380AE9562}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{59CEE8CF-22DA-4637-9B95-255380AE9562}.Release|Any CPU.Build.0 = Release|Any CPU
+		{75DF3964-5534-4526-A444-9038D60443A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{75DF3964-5534-4526-A444-9038D60443A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{75DF3964-5534-4526-A444-9038D60443A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{75DF3964-5534-4526-A444-9038D60443A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DF228B58-ED6A-4E61-A957-D17D72A659C2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DF228B58-ED6A-4E61-A957-D17D72A659C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DF228B58-ED6A-4E61-A957-D17D72A659C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DF228B58-ED6A-4E61-A957-D17D72A659C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{437F75B6-8329-4761-A9B9-CE6A4A58DC09}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{437F75B6-8329-4761-A9B9-CE6A4A58DC09}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{437F75B6-8329-4761-A9B9-CE6A4A58DC09}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{437F75B6-8329-4761-A9B9-CE6A4A58DC09}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 5
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://robiskaro.visualstudio.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Core\\Core.csproj
+		SccProjectName1 = Core
+		SccLocalPath1 = Core
+		SccProjectUniqueName2 = Implementation\\Implementation.csproj
+		SccProjectName2 = Implementation
+		SccLocalPath2 = Implementation
+		SccProjectUniqueName3 = PbzApi\\PbzApi.csproj
+		SccProjectName3 = PbzApi
+		SccLocalPath3 = PbzApi
+		SccProjectUniqueName4 = CacheAttribute\\CacheAttribute.csproj
+		SccProjectName4 = CacheAttribute
+		SccLocalPath4 = CacheAttribute
+	EndGlobalSection
+EndGlobal
