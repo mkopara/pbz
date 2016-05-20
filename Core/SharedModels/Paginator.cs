@@ -26,21 +26,28 @@ namespace Core.SharedModels
 
         public Paginator(IEnumerable<T> list, int page, int pageSize)
         {
-
             TotalPages = (int)Math.Ceiling((decimal)list.Count() / pageSize);
             PageSize = pageSize;
 
+            if (page <= 0)
+                page = 1;
+            
+
             _list = list.Skip((page-1) * pageSize).Take(pageSize);
 
-            if (page > TotalPages)
-                page = TotalPages;
+            //if (page > TotalPages)
+            //    page = TotalPages;
 
+            //if there is next page, set it
             if (TotalPages > page)
                 NextPage = page+1;
-            if (page > 1 && TotalPages > 1)
+
+            //if there is previous page, set it
+            if (page > 1 && _list.Count() > 0)
                 PreviousPage = page-1;
 
             CurrentPage = page;
+          
         }
 
         public List<Link> GetPaginationLinks(string prefixURL)
