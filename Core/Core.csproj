@@ -47,7 +47,7 @@
   <ItemGroup>
     <Compile Include="SharedModels\Link.cs" />
     <Compile Include="SharedModels\Paginator.cs" />
-    <Compile Include="DomainModels\PBZCurrency.cs" />
+    <Compile Include="DomainModels\Currency.cs" />
     <Compile Include="Interfaces\ExchangeRate\IExchangeRateRepository.cs" />
     <Compile Include="Interfaces\ExchangeRate\IPBZExchangeRateRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

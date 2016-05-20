@@ -25,9 +25,6 @@ namespace PbzApi.Controllers
 
         IPBZExchangeRateRepository _pbzRepository;
 
-        //just for another example
-        private static readonly MemoryCache Cache = MemoryCache.Default;
-
         public ExchangeRatesController(IPBZExchangeRateRepository pbzRepository)
         {
             _pbzRepository = pbzRepository;
