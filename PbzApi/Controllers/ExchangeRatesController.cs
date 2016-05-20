@@ -51,8 +51,10 @@ namespace PbzApi.Controllers
             if (!string.IsNullOrEmpty(code))
                 data = data.Where(m => m.CurrencyCode.Equals(code, StringComparison.CurrentCultureIgnoreCase));
 
-            //provide data test to helper class, to page it and create link information about previous and next page
+            //provide data to helper class, to page it and create link information about previous and next page
             var paginator = new Paginator<Currency>(data, pagingInfo.Page, pagingInfo.Take);
+
+            //paged data
             data = paginator.List;
 
             return Request.CreateResponse(HttpStatusCode.OK, new RatesModel
@@ -87,8 +89,9 @@ namespace PbzApi.Controllers
             if (!string.IsNullOrEmpty(code))
                 data = data.Where(m => m.CurrencyCode.Equals(code, StringComparison.CurrentCultureIgnoreCase));
 
-            //provide data test to helper class, to page it and create link information about previous and next page
+            //provide data to helper class, to page it and create link information about previous and next page
             var paginator = new Paginator<Currency>(data, pagingInfo.Page, pagingInfo.Take);
+            //paged data
             data = paginator.List;
 
             var response =  Request.CreateResponse(HttpStatusCode.OK, new RatesModel
