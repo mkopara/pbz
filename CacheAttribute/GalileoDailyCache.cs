@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace CacheAttribute
 {
+    /// <summary>
+    /// Provides caching mechanism on daily bases
+    /// </summary>
     public sealed class GalileoDailyCache : GalileoCaching
     {
         /// <summary>

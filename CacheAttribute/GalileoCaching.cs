@@ -15,9 +15,7 @@ namespace CacheAttribute
     [AttributeUsage(AttributeTargets.Method, AllowMultiple = false)]
     public abstract class GalileoCaching : ActionFilterAttribute
     {
-        //storing all cached info in this variable
-       // private static Dictionary<string, CacheHolder> cache = new Dictionary<string, CacheHolder>();
-
+      
         protected DateTime _expirationDate;
 
         public async override Task OnActionExecutingAsync(HttpActionContext actionContext, CancellationToken cancellationToken)
@@ -52,6 +50,7 @@ namespace CacheAttribute
                 //fetch Value from response as object
                 var responseValue = (actionExecutedContext.Response.Content as ObjectContent).Value;
 
+                //get response as string (will be used for ETag generation)
                 var responseString = await actionExecutedContext.Request.Content.ReadAsStringAsync();
 
                 //create cache holder and add it to memory list

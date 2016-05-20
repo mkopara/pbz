@@ -13,6 +13,10 @@ namespace Implementation.Repositories
 {
     public class PBZExchangeRateRepository : IPBZExchangeRateRepository
     {
+        /// <summary>
+        /// Fetch list of items from PBZ Web api
+        /// </summary>
+        /// <returns></returns>
         public async Task<IEnumerable<Currency>> FetchAsync()
         {
             using (var client = new HttpClient())

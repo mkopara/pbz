@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace CacheAttribute
 {
     /// <summary>
-    /// For attribute usage
+    /// Abstraction of for memory storage actions
     /// </summary>
     internal class GalileoMemoryStorage
     {

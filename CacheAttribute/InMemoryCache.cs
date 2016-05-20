@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace CacheAttribute
 {
     /// <summary>
-    /// For public usage
+    /// Abstraction For public usage and in memory caching
     /// </summary>
     public static class InMemoryCache
     {
@@ -17,6 +17,7 @@ namespace CacheAttribute
             var item = System.Runtime.Caching.MemoryCache.Default.Get(key) as T;
             if (item == null)
             {
+                //if item does not exist, invoke callback to load it
                 item = getItemCallback?.Invoke();
                 lock (locker)
                 {

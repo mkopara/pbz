@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Core.DomainModels
 {
-    
+   
     public class Currency 
     {
         public decimal BuyRateCache { get; set; }

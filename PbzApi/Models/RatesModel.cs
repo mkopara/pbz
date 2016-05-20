@@ -7,6 +7,7 @@ using System.Web;
 
 namespace PbzApi.Models
 {
+    //Model used to return data from WEB Api
     public class RatesModel
     {
         public List<Currency> Data { get; set; }

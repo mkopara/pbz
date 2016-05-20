@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace CacheAttribute
 {
     /// <summary>
-    /// Holder for cache items
+    /// Wrapper for cache items in GalileoCaching system
     /// </summary>
     public class CacheHolder
     {
@@ -21,6 +21,8 @@ namespace CacheAttribute
             Value = value;
             Key = key;
             _responseString = responseString;
+
+            //calculate md5 hash for ETag attribute
             ETag = GetMD5Hash(_responseString + Key);
            
         }
@@ -31,7 +33,7 @@ namespace CacheAttribute
         public Object ETag { get; set; }
         private string _responseString { get; set; }
 
-        public static String GetMD5Hash(String TextToHash)
+        private static String GetMD5Hash(String TextToHash)
         {
             //Check wether data was passed
             if ((TextToHash == null) || (TextToHash.Length == 0))
