@@ -33,11 +33,11 @@ namespace Implementation.Repositories
                     CurrencyCode = x.Attribute("Code").Value,
                     Name = x.Element("Name").Value,
                     Unit = int.Parse(x.Element("Unit").Value),
-                    BuyRateCache = decimal.Parse(x.Element("BuyRateCache").Value.Replace(',', '.'), CultureInfo.InvariantCulture),
-                    BuyRateForeign = decimal.Parse(x.Element("BuyRateForeign").Value.Replace(',', '.'), CultureInfo.InvariantCulture),
-                    MeanRate = decimal.Parse(x.Element("MeanRate").Value.Replace(',', '.'), CultureInfo.InvariantCulture),
-                    SellRateForeign = decimal.Parse(x.Element("SellRateForeign").Value.Replace(',', '.'), CultureInfo.InvariantCulture),
-                    SellRateCache = decimal.Parse(x.Element("SellRateCache").Value.Replace(',', '.'), CultureInfo.InvariantCulture)
+                    BuyRateCache = decimal.Parse(x.Element("BuyRateCache").Value, CultureInfo.InvariantCulture),
+                    BuyRateForeign = decimal.Parse(x.Element("BuyRateForeign").Value, CultureInfo.InvariantCulture),
+                    MeanRate = decimal.Parse(x.Element("MeanRate").Value, CultureInfo.InvariantCulture),
+                    SellRateForeign = decimal.Parse(x.Element("SellRateForeign").Value, CultureInfo.InvariantCulture),
+                    SellRateCache = decimal.Parse(x.Element("SellRateCache").Value, CultureInfo.InvariantCulture)
                 });
 
                 return rates;

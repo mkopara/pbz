@@ -1,6 +1,7 @@
 ﻿using Core.DomainModels;
 using Core.Interfaces;
 using Implementation.Repositories;
+using PbzApi.Attributes;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,7 @@ namespace PbzApi
             );
 
             config.Formatters.XmlFormatter.UseXmlSerializer = true;
+            config.Filters.Add(new ExceptionHandlingAttribute());
         }
     }
 }
