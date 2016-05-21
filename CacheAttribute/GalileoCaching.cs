@@ -26,13 +26,15 @@ namespace CacheAttribute
             if (GalileoMemoryStorage.Contains(key))
             {
                 var memoryItem = GalileoMemoryStorage.Get(key);
-                actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.OK, memoryItem.Value);
+                actionContext.Response = actionContext.Request.CreateResponse(HttpStatusCode.OK);
+                actionContext.Response.Content = new ByteArrayContent(memoryItem.Value);
+                actionContext.Response.Content.Headers.ContentType = memoryItem.ContentType;
 
-                //set cache control header for clients to know that content is cached
-                var secondsLeft = Math.Round((memoryItem.ExpirationDate - DateTime.Now).TotalSeconds);
+               //set cache control header for clients to know that content is cached
+               var secondsLeft = Math.Round((memoryItem.ExpirationDate - DateTime.Now).TotalSeconds);
                 actionContext.Response.Headers.Add("Cache-Control", string.Format("max-age={0}", secondsLeft));
                 actionContext.Response.Headers.Add("ETag", string.Format("\"{0}\"", memoryItem.ETag));
-                return;
+                
             }
 
             await base.OnActionExecutingAsync(actionContext, cancellationToken);
@@ -47,14 +49,11 @@ namespace CacheAttribute
                 //use url as storage key for cache
                 var key = actionExecutedContext.Request.RequestUri.ToString();
 
-                //fetch Value from response as object
-                var responseValue = (actionExecutedContext.Response.Content as ObjectContent).Value;
 
-                //get response as string (will be used for ETag generation)
-                var responseString = await actionExecutedContext.Request.Content.ReadAsStringAsync();
-
+                var contentType = actionExecutedContext.Response.Content.Headers.ContentType;
+                var value = await (actionExecutedContext.Response.Content as ObjectContent).ReadAsByteArrayAsync().ConfigureAwait(false);
                 //create cache holder and add it to memory list
-                var cacheHolder = new CacheHolder(_expirationDate, responseValue, key, responseString);
+                var cacheHolder = new CacheHolder(_expirationDate, value, key, contentType);
                 GalileoMemoryStorage.Add(cacheHolder, key, _expirationDate);
 
                 //set cache control header for clients to know that content is cached

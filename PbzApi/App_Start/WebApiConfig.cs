@@ -26,6 +26,7 @@ namespace PbzApi
             );
 
             config.Formatters.XmlFormatter.UseXmlSerializer = true;
+           
             config.Filters.Add(new ExceptionHandlingAttribute());
         }
     }

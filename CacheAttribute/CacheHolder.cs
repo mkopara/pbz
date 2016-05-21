@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.Security.Cryptography;
 using System.Text;
@@ -15,28 +17,30 @@ namespace CacheAttribute
     public class CacheHolder
     {
 
-        public CacheHolder(DateTime expirationDate, Object value, string key, string responseString)
+        public CacheHolder(DateTime expirationDate, byte[] value, string key,  MediaTypeHeaderValue contentType)
         {
             ExpirationDate = expirationDate;
             Value = value;
             Key = key;
-            _responseString = responseString;
+            ContentType = contentType;
 
             //calculate md5 hash for ETag attribute
-            ETag = GetMD5Hash(_responseString + Key);
+            ETag = GetMD5Hash(Value);
            
         }
 
         public string Key { get; set; }
         public DateTime ExpirationDate { get; set; }
-        public Object Value { get; set; }
-        public Object ETag { get; set; }
+        public byte[] Value { get; set; }
+        public string ETag { get; set; }
+        public MediaTypeHeaderValue ContentType { get; set; }
         private string _responseString { get; set; }
+       
 
-        private static String GetMD5Hash(String TextToHash)
+        private static String GetMD5Hash(byte[] content)
         {
             //Check wether data was passed
-            if ((TextToHash == null) || (TextToHash.Length == 0))
+            if ((content == null))
             {
                 return String.Empty;
             }
@@ -44,8 +48,7 @@ namespace CacheAttribute
             //Calculate MD5 hash. This requires that the string is splitted into a byte[].
             using (MD5 md5 = new MD5CryptoServiceProvider())
             {
-                var textToHash = Encoding.Default.GetBytes(TextToHash);
-                var result = md5.ComputeHash(textToHash);
+                var result = md5.ComputeHash(content);
 
                 //Convert result back to string.
                 return System.BitConverter.ToString(result).Replace("-", "");
