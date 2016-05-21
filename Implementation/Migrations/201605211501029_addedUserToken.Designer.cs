@@ -7,13 +7,13 @@ namespace Implementation.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class initialdbadd : IMigrationMetadata
+    public sealed partial class addedUserToken : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(initialdbadd));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(addedUserToken));
         
         string IMigrationMetadata.Id
         {
-            get { return "201605211432516_initial db add"; }
+            get { return "201605211501029_addedUserToken"; }
         }
         
         string IMigrationMetadata.Source

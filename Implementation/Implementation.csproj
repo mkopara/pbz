@@ -54,9 +54,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Database\Security\GalileoSecurityContext.cs" />
-    <Compile Include="Migrations\201605211432516_initial db add.cs" />
-    <Compile Include="Migrations\201605211432516_initial db add.Designer.cs">
-      <DependentUpon>201605211432516_initial db add.cs</DependentUpon>
+    <Compile Include="Migrations\201605211444048_added users table.cs" />
+    <Compile Include="Migrations\201605211444048_added users table.Designer.cs">
+      <DependentUpon>201605211444048_added users table.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605211501029_addedUserToken.cs" />
+    <Compile Include="Migrations\201605211501029_addedUserToken.Designer.cs">
+      <DependentUpon>201605211501029_addedUserToken.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -77,8 +81,11 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201605211432516_initial db add.resx">
-      <DependentUpon>201605211432516_initial db add.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201605211444048_added users table.resx">
+      <DependentUpon>201605211444048_added users table.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605211501029_addedUserToken.resx">
+      <DependentUpon>201605211501029_addedUserToken.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
