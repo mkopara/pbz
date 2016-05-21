@@ -20,7 +20,7 @@ namespace CacheAttribute
 
         public async override Task OnActionExecutingAsync(HttpActionContext actionContext, CancellationToken cancellationToken)
         {
-            var key = actionContext.Request.RequestUri.ToString();
+            var key = GenerateCacheKey(actionContext);
 
             //if cache contains element which did not expire, inject it back to response
             if (GalileoMemoryStorage.Contains(key))
@@ -34,6 +34,8 @@ namespace CacheAttribute
                var secondsLeft = Math.Round((memoryItem.ExpirationDate - DateTime.Now).TotalSeconds);
                 actionContext.Response.Headers.Add("Cache-Control", string.Format("max-age={0}", secondsLeft));
                 actionContext.Response.Headers.Add("ETag", string.Format("\"{0}\"", memoryItem.ETag));
+
+                return;
                 
             }
 
@@ -46,9 +48,7 @@ namespace CacheAttribute
             if(actionExecutedContext.Request.Method.Method.ToUpper() == "GET" 
                 && actionExecutedContext.Response.IsSuccessStatusCode && _expirationDate > DateTime.Now)
             {
-                //use url as storage key for cache
-                var key = actionExecutedContext.Request.RequestUri.ToString();
-
+                var key = GenerateCacheKey(actionExecutedContext.ActionContext);
 
                 var contentType = actionExecutedContext.Response.Content.Headers.ContentType;
                 var value = await (actionExecutedContext.Response.Content as ObjectContent).ReadAsByteArrayAsync().ConfigureAwait(false);
@@ -63,6 +63,12 @@ namespace CacheAttribute
             }
            
             await base.OnActionExecutedAsync(actionExecutedContext, cancellationToken);
+        }
+
+
+        private string GenerateCacheKey(HttpActionContext context)
+        {
+            return context.Request.RequestUri.ToString() + context.Request.Headers.Accept.ToString();
         }
     }
 }
