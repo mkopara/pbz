@@ -6,7 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace UserDatabaseModels
+namespace Core.DatabaseModels.Security
 {
     public class UserToken
     {

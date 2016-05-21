@@ -5,14 +5,14 @@ namespace Implementation.Migrations
     using System.Data.Entity.Migrations;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<Implementation.Database.Security.GalileoSecurityContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<Implementation.Databases.Security.GalileoSecurityContext>
     {
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(Implementation.Database.Security.GalileoSecurityContext context)
+        protected override void Seed(Implementation.Databases.Security.GalileoSecurityContext context)
         {
             //  This method will be called after migrating to the latest version.
 

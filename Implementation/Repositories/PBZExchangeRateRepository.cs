@@ -1,6 +1,7 @@
 ﻿using Core.DomainModels;
 using Core.Interfaces;
 using Core.Interfaces.ExchangeRate;
+using Implementation.Databases.Security;
 using System;
 using System.Collections.Generic;
 using System.Globalization;

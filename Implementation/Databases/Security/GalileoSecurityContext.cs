@@ -1,11 +1,12 @@
-﻿using System;
+﻿using Core.DatabaseModels.Security;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Implementation.Database.Security
+namespace Implementation.Databases.Security
 {
     public class GalileoSecurityContext : DbContext
     {
@@ -13,6 +14,7 @@ namespace Implementation.Database.Security
         {
 
         }
-        public virtual DbSet<UserDatabaseModels.User> Users { get; set; }
+        public virtual DbSet<User> Users { get; set; }
+        public virtual DbSet<UserToken> UserTokens { get; set; }
     }
 }
