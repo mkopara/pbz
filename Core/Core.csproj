@@ -59,6 +59,7 @@
     <Compile Include="Interfaces\IAsyncDbSet.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
+    <Compile Include="Interfaces\Security\IUserService.cs" />
     <Compile Include="SharedModels\Link.cs" />
     <Compile Include="SharedModels\Paginator.cs" />
     <Compile Include="DomainModels\Currency.cs" />
@@ -71,9 +72,7 @@
     <None Include="App.config" />
     <None Include="packages.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Interfaces\Security\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

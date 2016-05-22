@@ -1,8 +1,10 @@
 ﻿using Core.DatabaseModels.Security;
 using Core.Interfaces;
+using Core.Interfaces.Security;
 using Implementation.Databases.Security;
 using Implementation.Repositories;
 using Implementation.UnitOfWork.Security;
+using Implementation.User.Services;
 using Microsoft.Practices.Unity;
 using System;
 using System.Collections.Generic;
@@ -32,7 +34,9 @@ namespace AuthApi.App_Start
             container.RegisterType<IUnitOfWork, UnitOfWork>(new PerThreadLifetimeManager());
             container.RegisterType<IRepository<User>, Repository<User>>();
             container.RegisterType<IRepository<UserToken>, Repository<UserToken>>();
+            container.RegisterType<IUserService, UserService>();
             container.RegisterType<DbContext, GalileoSecurityContext>();
+            
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
         }
     }

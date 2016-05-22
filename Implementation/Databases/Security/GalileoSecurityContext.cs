@@ -14,7 +14,7 @@ namespace Implementation.Databases.Security
         {
 
         }
-        public virtual DbSet<User> Users { get; set; }
-        public virtual DbSet<UserToken> UserTokens { get; set; }
+        public virtual DbSet<Core.DatabaseModels.Security.User> Users { get; set; }
+        public virtual DbSet<Core.DatabaseModels.Security.UserToken> UserTokens { get; set; }
     }
 }
