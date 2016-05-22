@@ -22,7 +22,7 @@ namespace AuthApi.Controllers
             _userService = userService;
         }
 
-        [Route("api/auth")]
+        [Route("api/auth/generate")]
         [HttpPost]
         public async Task<HttpResponseMessage> GenerateToken([FromBody]AuthModel model)
         {
@@ -38,6 +38,8 @@ namespace AuthApi.Controllers
                 //    PhoneNumber = "9032023"
                 //};
 
+               await  _userService.ValidateToken("ce8625ab-cf4b-496d-b1ad-55941eff2fdf");
+
                 if(model.Password == null || model.Email == null)
                     return Request.CreateResponse(HttpStatusCode.Unauthorized, new List<string> { "Please supply credentials" });
 
@@ -52,6 +54,30 @@ namespace AuthApi.Controllers
                     return Request.CreateResponse(HttpStatusCode.Unauthorized, new List<string> { "Invalid credentials" });
                 }
             }
+
+        }
+
+        [Route("api/auth/validate")]
+        [HttpPost]
+        public async Task<HttpResponseMessage> ValidateToken([FromBody]AuthModel model)
+        {
+            //if (model == null) model = new AuthModel();
+            //using (_userService)
+            //{
+
+            //    if(model.Token == null)
+            //        return Request.CreateResponse(HttpStatusCode.Unauthorized, new List<string> { "Invalid token" });
+
+            //    var dbToken = await _userService.GetTokenInfo(model.Token);
+
+            //    if (dbToken == null)
+            //        return Request.CreateResponse(HttpStatusCode.Unauthorized, new List<string> { "Invalid token" });
+            //    if (dbToken.Expired)
+            //        return Request.CreateResponse(HttpStatusCode.Unauthorized, new List<string> { "Token Expired on " + dbToken.Expires });
+
+                return Request.CreateResponse(HttpStatusCode.OK);
+
+            
 
         }
 

@@ -11,7 +11,7 @@ namespace Implementation.Services
     public class Service 
     {
 
-        protected IUnitOfWork _unitOfWork;
+        public IUnitOfWork _unitOfWork;
 
         public Service(IUnitOfWork unitOfWork)
         {

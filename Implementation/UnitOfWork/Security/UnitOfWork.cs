@@ -12,7 +12,7 @@ namespace Implementation.UnitOfWork.Security
 {
     public class UnitOfWork : IUnitOfWork
     {
-        DbContext _context;
+        public DbContext _context;
 
         public UnitOfWork(DbContext context)
         {

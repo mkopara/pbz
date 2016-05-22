@@ -12,9 +12,9 @@ namespace Core.Interfaces.Security
     {
         Task<User> GetUserAsync(int id);
 
-        Task<TokenInfo> GetTokenInfo(string token);
+        Task<bool> ValidateToken(string token);
 
-        Task<TokenInfo> Authenticate(string email, string password);
+        Task<int> Authenticate(string email, string password);
 
         Task<int> AddUser(CreateUser user);
     }

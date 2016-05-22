@@ -16,7 +16,7 @@ namespace Core.DomainModels.Security
         {
             Expires = token.ExpiresOn;
             UserId = token.UserId;
-            Expired = token.ExpiresOn > DateTime.Now;
+            Expired = token.ExpiresOn < DateTime.Now;
             Token = token.Token;
         }
 

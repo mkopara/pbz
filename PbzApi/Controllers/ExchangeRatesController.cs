@@ -1,4 +1,5 @@
-﻿using CacheAttribute;
+﻿using AuthAtrributes;
+using CacheAttribute;
 using Core.DomainModels;
 using Core.Interfaces;
 using Core.Interfaces.ExchangeRate;
@@ -32,6 +33,8 @@ namespace PbzApi.Controllers
 
         // GET api/ExchangeRates
         [HttpGet]
+        [ApiAuthenticationFilter(true)]
+        [AuthorizationRequiredAttribute]
         [GalileoDailyCache(23,59,59)]
         [Route("api/ExchangeRates/")]
         public async Task<HttpResponseMessage> Get([FromUri]PagingQueryInfo pagingInfo, string name = null, string code = null)

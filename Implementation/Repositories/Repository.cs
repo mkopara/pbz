@@ -21,6 +21,7 @@ namespace Implementation.Repositories
             _unitOfWork = unitOfWork;
             _dbSet = _unitOfWork.Set<TEntity>();
         }
+
      
 
         public Task<List<TEntity>> GetAsync(
@@ -100,7 +101,8 @@ namespace Implementation.Repositories
 
         public virtual void Update(TEntity entityToUpdate)
         {
-            _dbSet.Attach(entityToUpdate);
-}
+            if(!_dbSet.Local.Any(m => m == entityToUpdate))
+                _dbSet.Attach(entityToUpdate);
+        }
     }
 }
