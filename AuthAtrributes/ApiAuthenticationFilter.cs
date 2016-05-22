@@ -43,21 +43,18 @@ namespace AuthAtrributes
                                .DependencyResolver.GetService(typeof(IAuthApiService)) as IAuthApiService;
             if (provider != null)
             {
-                try
+
+                var userId = Task.Run(() => provider.Authenticate(username, password)).Result;
+                if (userId > 0)
                 {
-                    var userId = Task.Run(() => provider.Authenticate(username, password)).Result;
-                    if (userId > 0)
-                    {
-                        var basicAuthenticationIdentity = Thread.CurrentPrincipal.Identity as BasicAuthenticationIdentity;
-                        if (basicAuthenticationIdentity != null)
-                            basicAuthenticationIdentity.UserId = userId;
-                        return true;
-                    }
+                    var basicAuthenticationIdentity = Thread.CurrentPrincipal.Identity as BasicAuthenticationIdentity;
+                    if (basicAuthenticationIdentity != null)
+                        basicAuthenticationIdentity.UserId = userId;
+                    return true;
                 }
-                catch(Exception ex)
-                {
-                    throw;
-                }
+
+
+
             }
             return false;
         }

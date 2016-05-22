@@ -21,6 +21,7 @@ namespace AuthApi
             );
 
             config.Formatters.XmlFormatter.UseXmlSerializer = true;
+            //config.Formatters.JsonFormatter.UseDataContractJsonSerializer = true;
         }
     }
 }
