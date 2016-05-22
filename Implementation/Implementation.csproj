@@ -63,6 +63,22 @@
     <Compile Include="Migrations\201605211501029_addedUserToken.Designer.cs">
       <DependentUpon>201605211501029_addedUserToken.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201605221618499_added token.cs" />
+    <Compile Include="Migrations\201605221618499_added token.Designer.cs">
+      <DependentUpon>201605221618499_added token.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605221636466_modifiedsalt.cs" />
+    <Compile Include="Migrations\201605221636466_modifiedsalt.Designer.cs">
+      <DependentUpon>201605221636466_modifiedsalt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605221638552_removedstringsalt.cs" />
+    <Compile Include="Migrations\201605221638552_removedstringsalt.Designer.cs">
+      <DependentUpon>201605221638552_removedstringsalt.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201605221639403_renamedsalt.cs" />
+    <Compile Include="Migrations\201605221639403_renamedsalt.Designer.cs">
+      <DependentUpon>201605221639403_renamedsalt.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repositories\PBZExchangeRateRepository.cs" />
@@ -87,6 +103,18 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201605211501029_addedUserToken.resx">
       <DependentUpon>201605211501029_addedUserToken.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605221618499_added token.resx">
+      <DependentUpon>201605221618499_added token.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605221636466_modifiedsalt.resx">
+      <DependentUpon>201605221636466_modifiedsalt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605221638552_removedstringsalt.resx">
+      <DependentUpon>201605221638552_removedstringsalt.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201605221639403_renamedsalt.resx">
+      <DependentUpon>201605221639403_renamedsalt.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

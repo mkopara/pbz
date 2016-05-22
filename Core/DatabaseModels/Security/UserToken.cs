@@ -15,6 +15,10 @@ namespace Core.DatabaseModels.Security
 
         public int UserId { get; set; }
 
+
+        [Required]
+        public string Token { get; set; }
+
         [Required]
         public DateTime CreatedOn { get; set; }
 

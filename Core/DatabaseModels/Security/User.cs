@@ -27,8 +27,9 @@ namespace Core.DatabaseModels.Security
 
         public bool EmailConfirmed { get; set; }
 
+       
         [Required]
-        public string Salt { get; set; }
+        public byte[] Salt{ get; set; }
 
         [Required]
         public string PasswordHash { get; set; }

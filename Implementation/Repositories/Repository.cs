@@ -51,10 +51,36 @@ namespace Implementation.Repositories
             }
         }
 
+
+        public Task<TEntity> GetSingleOrDefaultAsync(Expression<Func<TEntity, bool>> filter = null, string includeProperties = "")
+        {
+            IQueryable<TEntity> query = _dbSet;
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            foreach (var includeProperty in includeProperties.Split
+                (new char[] { ',' }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                query = query.Include(includeProperty);
+            }
+
+            return query.SingleOrDefaultAsync(filter);
+        }
         public virtual Task<TEntity> GetByIDAsync(object id)
         {
             return _dbSet.FindAsync(id);
         }
+        public virtual Task<bool> AnyAsync(Expression<Func<TEntity, bool>> filter = null)
+        {
+            if (filter == null)
+                return _dbSet.AnyAsync();
+            else
+                return _dbSet.AnyAsync(filter);
+        }
+
 
         public virtual void Insert(TEntity entity)
         {

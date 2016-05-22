@@ -31,7 +31,7 @@ namespace AuthApi.App_Start
             //registering corresponding repository for IPBZExchangeRateRepository
         
             
-            container.RegisterType<IUnitOfWork, UnitOfWork>(new PerThreadLifetimeManager());
+            container.RegisterType<IUnitOfWork, UnitOfWork>(new PerRequestLifetimeManager());
             container.RegisterType<IRepository<User>, Repository<User>>();
             container.RegisterType<IRepository<UserToken>, Repository<UserToken>>();
             container.RegisterType<IUserService, UserService>();

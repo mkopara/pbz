@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Core.Interfaces
 {
+    //unit of work interface
     public interface IUnitOfWork : IDisposable
     {
         DbSet<T> Set<T>() where T : class;

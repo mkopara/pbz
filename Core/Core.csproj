@@ -56,7 +56,9 @@
   <ItemGroup>
     <Compile Include="DatabaseModels\Security\User.cs" />
     <Compile Include="DatabaseModels\Security\UserToken.cs" />
-    <Compile Include="Interfaces\IAsyncDbSet.cs" />
+    <Compile Include="DomainModels\Security\CreateUser.cs" />
+    <Compile Include="DomainModels\Security\TokenInfo.cs" />
+    <Compile Include="Encryption\Encryption.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
     <Compile Include="Interfaces\Security\IUserService.cs" />
