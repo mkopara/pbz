@@ -162,6 +162,7 @@
   <ItemGroup>
     <Compile Include="App_Start\UnityConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Attributes\LocalAuthAttribute.cs" />
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -180,6 +181,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\AuthAtrributes\AuthAtrributes.csproj">
+      <Project>{365393a1-da4c-49a5-bb9b-8c610c61640b}</Project>
+      <Name>AuthAtrributes</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Core\Core.csproj">
       <Project>{75df3964-5534-4526-a444-9038d60443a1}</Project>
       <Name>Core</Name>

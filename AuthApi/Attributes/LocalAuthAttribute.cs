@@ -1,23 +1,23 @@
-﻿using Core.Interfaces.Security;
+﻿using AuthAtrributes;
+using Core.Interfaces.Security;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http.Controllers;
 
-namespace AuthAtrributes
+namespace AuthApi.Attributes
 {
-    /// <summary>
-    /// Custom Authentication Filter Extending basic Authentication
-    /// </summary>
-    public class ApiAuthenticationFilter : GenericAuthenticationFilter
+    //attribute for local authentication
+    public class LocalAuthAttribute : GenericAuthenticationFilter
     {
+
         /// <summary>
         /// Default Authentication Constructor
         /// </summary>
-        public ApiAuthenticationFilter()
+        public LocalAuthAttribute()
         {
         }
 
@@ -25,7 +25,7 @@ namespace AuthAtrributes
         /// AuthenticationFilter constructor with isActive parameter
         /// </summary>
         /// <param name="isActive"></param>
-        public ApiAuthenticationFilter(bool isActive)
+        public LocalAuthAttribute(bool isActive)
             : base(isActive)
         {
         }
@@ -40,21 +40,21 @@ namespace AuthAtrributes
         protected override bool OnAuthorizeUser(string username, string password, HttpActionContext actionContext)
         {
             var provider = actionContext.ControllerContext.Configuration
-                               .DependencyResolver.GetService(typeof(IAuthApiService)) as IAuthApiService;
+                               .DependencyResolver.GetService(typeof(IUserService)) as IUserService;
             if (provider != null)
             {
                 try
                 {
-                    var userId = Task.Run(() => provider.Authenticate(username, password)).Result;
-                    if (userId > 0)
+                    var tokenInfo = Task.Run(() => provider.Authenticate(username, password)).Result;
+                    if (tokenInfo != null)
                     {
                         var basicAuthenticationIdentity = Thread.CurrentPrincipal.Identity as BasicAuthenticationIdentity;
                         if (basicAuthenticationIdentity != null)
-                            basicAuthenticationIdentity.UserId = userId;
+                            basicAuthenticationIdentity.TokenInfo = tokenInfo;
                         return true;
                     }
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     throw;
                 }

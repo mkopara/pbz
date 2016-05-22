@@ -19,7 +19,7 @@ namespace AuthAtrributes
         {
             //  Get API key provider
             var provider = filterContext.ControllerContext.Configuration
-            .DependencyResolver.GetService(typeof(IUserService)) as IUserService;
+            .DependencyResolver.GetService(typeof(IAuthApiService)) as IAuthApiService;
 
             if (filterContext.Request.Headers.Contains(Token))
             {

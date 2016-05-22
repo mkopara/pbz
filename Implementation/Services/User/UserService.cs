@@ -23,67 +23,39 @@ namespace Implementation.User.Services
             IRepository<Core.DatabaseModels.Security.UserToken> userTokenRepository) : base(unitOfWork)
         {
             _userRepository = userRepository;
-
             _userTokenRepository = userTokenRepository;
-
         }
 
 
-        public Task<Core.DatabaseModels.Security.User> GetUserAsync(int id)
+      
+
+        public async Task<TokenInfo> Authenticate(string email, string password)
         {
-            return _userRepository.GetByIDAsync(id);
-        }
+            var user = await _userRepository.GetSingleOrDefaultAsync(m => m.Email == email);
+            if (user == null) return null;
 
-        public async Task<bool> ValidateToken(string token)
-        {
-            var dbToken =  await _userTokenRepository.GetSingleOrDefaultAsync(m => m.Token == token);
-            if (dbToken == null)
-                return false;
+            if (user.PasswordHash != Encryption.Encrypt(password, user.Salt))
+                return null;
 
-            var tokenInfo =  new TokenInfo(dbToken);
+            var token = new UserToken
+            {
+                CreatedOn = DateTime.Now,
+                ExpiresOn = DateTime.Now.AddMinutes(15),
+                Token = Guid.NewGuid().ToString(),
+                User = user
+            };
+            _userTokenRepository.Insert(token);
 
-            if (tokenInfo.Expired)
-                return false;
+            var count = await _unitOfWork.SaveAsync();
+
+            if (count == 0)
+                return null;
             else
             {
-                dbToken.ExpiresOn = DateTime.Now.AddMinutes(15);
-                _userTokenRepository.Update(dbToken);
-                await _unitOfWork.SaveAsync();
-                return true;
+                return new TokenInfo(token);
             }
 
         }
-
-        public async Task<int> Authenticate(string email, string password)
-        {
-            var user = await _userRepository.GetSingleOrDefaultAsync(m => m.Email == email);
-            if (user == null) return 0;
-
-            if (user.PasswordHash != Encryption.Encrypt(password, user.Salt))
-                return 0;
-
-            return user.Id;
-
-        }
-
-        public async Task<int> AddUser(CreateUser newUser)
-        {
-            var user = new Core.DatabaseModels.Security.User();
-
-            user.Email = newUser.Email;
-            //generate salt
-            user.Salt = Encryption.GetSalt();
-
-            //generate password hash
-            user.PasswordHash = Encryption.Encrypt(newUser.Password, user.Salt);
-
-
-            _userRepository.Insert(user);
-            await _unitOfWork.SaveAsync();
-
-            return user.Id;
-        }
-
 
         public void Dispose()
         {

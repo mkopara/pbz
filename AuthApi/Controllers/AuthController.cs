@@ -1,4 +1,6 @@
-﻿using AuthApi.Models;
+﻿using AuthApi.Attributes;
+using AuthApi.Models;
+using AuthAtrributes;
 using Core.DatabaseModels.Security;
 using Core.DomainModels.Security;
 using Core.Interfaces;
@@ -23,38 +25,24 @@ namespace AuthApi.Controllers
         }
 
         [Route("api/auth/generate")]
+        [LocalAuth]
         [HttpPost]
         public async Task<HttpResponseMessage> GenerateToken([FromBody]AuthModel model)
         {
             if (model == null) model = new AuthModel();
             using (_userService)
             {
-                //var tokena = await _userService.GetUserAsync(1);
-
-                //var testUser = new CreateUser
-                //{
-                //    Email = "robiskaro@gmail.com",
-                //    Password = "test22",
-                //    PhoneNumber = "9032023"
-                //};
-
-               await  _userService.ValidateToken("ce8625ab-cf4b-496d-b1ad-55941eff2fdf");
-
-                if(model.Password == null || model.Email == null)
-                    return Request.CreateResponse(HttpStatusCode.Unauthorized, new List<string> { "Please supply credentials" });
-
-                var token = await _userService.Authenticate(model.Email, model.Password);
-               
-                if (token != null)
+                if (System.Threading.Thread.CurrentPrincipal != null && System.Threading.Thread.CurrentPrincipal.Identity.IsAuthenticated)
                 {
-                    return Request.CreateResponse(HttpStatusCode.OK, token);
+                    var basicAuthenticationIdentity = System.Threading.Thread.CurrentPrincipal.Identity as BasicAuthenticationIdentity;
+                    if (basicAuthenticationIdentity != null)
+                    {
+                        if (basicAuthenticationIdentity.TokenInfo != null)
+                            return Request.CreateResponse(HttpStatusCode.OK, basicAuthenticationIdentity.TokenInfo);
+                    }
                 }
-                else
-                {
-                    return Request.CreateResponse(HttpStatusCode.Unauthorized, new List<string> { "Invalid credentials" });
-                }
+                return Request.CreateResponse(HttpStatusCode.Unauthorized);
             }
-
         }
 
         [Route("api/auth/validate")]

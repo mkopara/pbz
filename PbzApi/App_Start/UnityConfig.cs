@@ -5,6 +5,7 @@ using Core.Interfaces.ExchangeRate;
 using Core.Interfaces.Security;
 using Implementation.Databases.Security;
 using Implementation.Repositories;
+using Implementation.Services.Auth;
 using Implementation.UnitOfWork.Security;
 using Implementation.User.Services;
 using Microsoft.Practices.Unity;
@@ -27,13 +28,10 @@ namespace PbzApi
 
             //registering corresponding repository for IPBZExchangeRateRepository
             container.RegisterType<IPBZExchangeRateRepository, PBZExchangeRateRepository>();
+            container.RegisterType<IAuthApiService, AuthApiService>();
 
-            container.RegisterType<IUnitOfWork, UnitOfWork>(new PerRequestLifetimeManager());
-            container.RegisterType<DbContext, GalileoSecurityContext>(new PerRequestLifetimeManager());
-            container.RegisterType<IRepository<User>, Repository<User>>();
-            container.RegisterType<IRepository<UserToken>, Repository<UserToken>>();
-            container.RegisterType<IUserService, UserService>();
-          
+
+
 
             GlobalConfiguration.Configuration.DependencyResolver = new UnityDependencyResolver(container);
         }

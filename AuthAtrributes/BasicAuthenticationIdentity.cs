@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Core.DomainModels.Security;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Principal;
@@ -9,6 +10,7 @@ namespace AuthAtrributes
 {
     public class BasicAuthenticationIdentity : GenericIdentity
     {
+
         /// <summary>
         /// Get/Set for password
         /// </summary>
@@ -16,22 +18,24 @@ namespace AuthAtrributes
         /// <summary>
         /// Get/Set for UserName
         /// </summary>
-        public string UserName { get; set; }
+        public string Email { get; set; }
         /// <summary>
         /// Get/Set for UserId
         /// </summary>
         public int UserId { get; set; }
+
+        public TokenInfo TokenInfo { get; set; }
 
         /// <summary>
         /// Basic Authentication Identity Constructor
         /// </summary>
         /// <param name="userName"></param>
         /// <param name="password"></param>
-        public BasicAuthenticationIdentity(string userName, string password)
-            : base(userName, "Basic")
+        public BasicAuthenticationIdentity(string email, string password)
+                : base(email, "Basic")
         {
             Password = password;
-            UserName = userName;
+            Email = email;
         }
     }
 }

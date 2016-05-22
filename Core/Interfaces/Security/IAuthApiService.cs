@@ -8,9 +8,12 @@ using System.Threading.Tasks;
 
 namespace Core.Interfaces.Security
 {
-    public interface IUserService : IDisposable
+    public interface IAuthApiService
     {
+ 
+        Task<bool> ValidateToken(string token);
 
-        Task<TokenInfo> Authenticate(string email, string password);
+        Task<int> Authenticate(string email, string password);
+
     }
 }

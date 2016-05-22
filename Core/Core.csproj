@@ -61,6 +61,7 @@
     <Compile Include="Encryption\Encryption.cs" />
     <Compile Include="Interfaces\IRepository.cs" />
     <Compile Include="Interfaces\IUnitOfWork.cs" />
+    <Compile Include="Interfaces\Security\IAuthApiService.cs" />
     <Compile Include="Interfaces\Security\IUserService.cs" />
     <Compile Include="SharedModels\Link.cs" />
     <Compile Include="SharedModels\Paginator.cs" />
