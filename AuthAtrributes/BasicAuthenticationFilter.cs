@@ -12,12 +12,12 @@ namespace AuthAtrributes
     /// <summary>
     /// Custom Authentication Filter Extending basic Authentication
     /// </summary>
-    public class ApiAuthenticationFilter : GenericAuthenticationFilter
+    public class BasicAuthenticationFilter : GenericAuthenticationFilter
     {
         /// <summary>
         /// Default Authentication Constructor
         /// </summary>
-        public ApiAuthenticationFilter()
+        public BasicAuthenticationFilter()
         {
         }
 
@@ -25,7 +25,7 @@ namespace AuthAtrributes
         /// AuthenticationFilter constructor with isActive parameter
         /// </summary>
         /// <param name="isActive"></param>
-        public ApiAuthenticationFilter(bool isActive)
+        public BasicAuthenticationFilter(bool isActive)
             : base(isActive)
         {
         }
@@ -44,12 +44,15 @@ namespace AuthAtrributes
             if (provider != null)
             {
 
-                var userId = Task.Run(() => provider.Authenticate(username, password)).Result;
-                if (userId > 0)
+                var userToken = Task.Run(() => provider.Authenticate(username, password)).Result;
+                if (userToken != null)
                 {
                     var basicAuthenticationIdentity = Thread.CurrentPrincipal.Identity as BasicAuthenticationIdentity;
                     if (basicAuthenticationIdentity != null)
-                        basicAuthenticationIdentity.UserId = userId;
+                    {
+                        basicAuthenticationIdentity.UserId = userToken.UserId;
+                        basicAuthenticationIdentity.TokenInfo = userToken;
+                    }
                     return true;
                 }
 

@@ -33,8 +33,7 @@ namespace PbzApi.Controllers
 
         // GET api/ExchangeRates
         [HttpGet]
-        [ApiAuthenticationFilter(true)]
-        [AuthorizationRequiredAttribute]
+        [TokenAuthorizationFilter]
         [GalileoDailyCache(23,59,59)]
         [Route("api/ExchangeRates/")]
         public async Task<HttpResponseMessage> Get([FromUri]PagingQueryInfo pagingInfo, string name = null, string code = null)
@@ -68,6 +67,7 @@ namespace PbzApi.Controllers
         }
 
         [HttpGet]
+        [BasicAuthenticationFilter(true)]
         [Route("api/ExchangeRates/memorycache")]
         [GalileoDailyCache(23, 59, 59)]
         public async Task<HttpResponseMessage> FullCached([FromUri]PagingQueryInfo pagingInfo, string name = null, string code = null)

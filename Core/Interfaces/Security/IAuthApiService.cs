@@ -8,12 +8,14 @@ using System.Threading.Tasks;
 
 namespace Core.Interfaces.Security
 {
+    /// <summary>
+    /// Interface for validation via web requests
+    /// </summary>
     public interface IAuthApiService
     {
- 
-        Task<bool> ValidateToken(string token);
+        Task<TokenInfo> ValidateToken(string token);
 
-        Task<int> Authenticate(string email, string password);
+        Task<TokenInfo> Authenticate(string email, string password);
 
     }
 }

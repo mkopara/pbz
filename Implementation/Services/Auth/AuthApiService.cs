@@ -1,4 +1,6 @@
-﻿using Core.Interfaces.Security;
+﻿using Core.DomainModels.Security;
+using Core.Interfaces.Security;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -9,14 +11,40 @@ using System.Threading.Tasks;
 
 namespace Implementation.Services.Auth
 {
+  
     public class AuthApiService : IAuthApiService
     {
-        public Task<bool> ValidateToken(string token)
+        public async Task<TokenInfo> ValidateToken(string token)
         {
-            return Task.Run(() => true);
+            using (var wb = new WebClient())
+            {
+
+                var data = new NameValueCollection();
+                data["token"] = token;
+               
+                try
+                {
+                    var response = await wb.UploadValuesTaskAsync(new Uri("http://localhost:49586/api/auth/validate"), "POST", data);
+                    var responseString = System.Text.Encoding.UTF8.GetString(response);
+                    var tokenInfo = JsonConvert.DeserializeObject<TokenInfo>(responseString);
+
+                    //check headers if needed
+                    // WebHeaderCollection myWebHeaderCollection = wb.ResponseHeaders;
+
+                    return tokenInfo;
+                }
+                catch (WebException ex)
+                {
+                    //var statusCode = ((HttpWebResponse)ex.Response).StatusCode;
+                    return null;
+                    //returning null if not authenticated
+                }
+
+            }
+            //return Task.Run(() => 1);
         }
 
-        public async Task<int> Authenticate(string email, string password)
+        public async Task<TokenInfo> Authenticate(string email, string password)
         {
             using (var wb = new WebClient())
             {
@@ -31,15 +59,20 @@ namespace Implementation.Services.Auth
 
                 try
                 {
-                    var response = await wb.UploadValuesTaskAsync(new Uri("http://localhost:49586/api/auth/generate"), "POST", data);
+                    var response = await wb.UploadValuesTaskAsync(new Uri("http://localhost:49586/api/auth/generate"), "POST", new NameValueCollection());
                     var responseString = System.Text.Encoding.UTF8.GetString(response);
-                    return 1;
+                    var tokenInfo = JsonConvert.DeserializeObject<TokenInfo>(responseString);
+
+                    //check headers if needed
+                   // WebHeaderCollection myWebHeaderCollection = wb.ResponseHeaders;
+
+                    return tokenInfo;
                 }
                 catch (WebException ex)
                 {
                     //var statusCode = ((HttpWebResponse)ex.Response).StatusCode;
-                    return 0;
-                   // return "An error occurred, status code: " + statusCode;
+                    return null;
+                  //returning null if not authenticated
                 }
 
             }

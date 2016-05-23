@@ -12,5 +12,7 @@ namespace Core.Interfaces.Security
     {
 
         Task<TokenInfo> Authenticate(string email, string password);
+
+        Task<TokenInfo> ValidateToken(string token);
     }
 }

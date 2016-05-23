@@ -7,6 +7,7 @@ using Core.Interfaces;
 using Core.Interfaces.Security;
 using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -38,7 +39,15 @@ namespace AuthApi.Controllers
                     if (basicAuthenticationIdentity != null)
                     {
                         if (basicAuthenticationIdentity.TokenInfo != null)
-                            return Request.CreateResponse(HttpStatusCode.OK, basicAuthenticationIdentity.TokenInfo);
+                        {
+                            var response =  Request.CreateResponse(HttpStatusCode.OK, basicAuthenticationIdentity.TokenInfo);
+
+                            response.Headers.Add("Token", basicAuthenticationIdentity.TokenInfo.Token);
+                            response.Headers.Add("TokenExpiry", ConfigurationManager.AppSettings["AuthTokenExpirySeconds"]);
+                            response.Headers.Add("Access-Control-Expose-Headers", "Token,TokenExpiry");
+
+                            return response;
+                        }
                     }
                 }
                 return Request.CreateResponse(HttpStatusCode.Unauthorized);
@@ -49,24 +58,23 @@ namespace AuthApi.Controllers
         [HttpPost]
         public async Task<HttpResponseMessage> ValidateToken([FromBody]AuthModel model)
         {
-            //if (model == null) model = new AuthModel();
-            //using (_userService)
-            //{
+            if (model == null) model = new AuthModel();
+            using (_userService)
+            {
 
-            //    if(model.Token == null)
-            //        return Request.CreateResponse(HttpStatusCode.Unauthorized, new List<string> { "Invalid token" });
+                if (model.Token == null)
+                    return Request.CreateResponse(HttpStatusCode.Unauthorized, new List<string> { "Invalid token" });
 
-            //    var dbToken = await _userService.GetTokenInfo(model.Token);
+                var dbToken = await _userService.ValidateToken(model.Token);
 
-            //    if (dbToken == null)
-            //        return Request.CreateResponse(HttpStatusCode.Unauthorized, new List<string> { "Invalid token" });
-            //    if (dbToken.Expired)
-            //        return Request.CreateResponse(HttpStatusCode.Unauthorized, new List<string> { "Token Expired on " + dbToken.Expires });
+                if (dbToken == null)
+                    return Request.CreateResponse(HttpStatusCode.Unauthorized, new List<string> { "Invalid token" });
+                if (dbToken.Expired)
+                    return Request.CreateResponse(HttpStatusCode.Unauthorized, new List<string> { "Token Expired on " + dbToken.Expires });
 
-                return Request.CreateResponse(HttpStatusCode.OK);
+                return Request.CreateResponse(HttpStatusCode.OK, dbToken);
 
-            
-
+            }
         }
 
     }
