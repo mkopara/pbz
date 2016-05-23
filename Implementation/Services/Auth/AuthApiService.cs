@@ -4,6 +4,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Configuration;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -11,9 +12,20 @@ using System.Threading.Tasks;
 
 namespace Implementation.Services.Auth
 {
-  
+      /// <summary>
+      /// Token validation and user authentication via web request
+      /// </summary>
     public class AuthApiService : IAuthApiService
     {
+        private string _endPoint;
+
+        public AuthApiService()
+        {
+            _endPoint = ConfigurationManager.AppSettings["SecurityEndpoint"];
+
+            if (_endPoint == null)
+                throw new ArgumentException("Please add SecurityEndpoint to configuration file");
+        }
         public async Task<TokenInfo> ValidateToken(string token)
         {
             using (var wb = new WebClient())
@@ -24,7 +36,7 @@ namespace Implementation.Services.Auth
                
                 try
                 {
-                    var response = await wb.UploadValuesTaskAsync(new Uri("http://localhost:49586/api/auth/validate"), "POST", data);
+                    var response = await wb.UploadValuesTaskAsync(new Uri(_endPoint+"validate"), "POST", data);
                     var responseString = System.Text.Encoding.UTF8.GetString(response);
                     var tokenInfo = JsonConvert.DeserializeObject<TokenInfo>(responseString);
 
@@ -59,7 +71,7 @@ namespace Implementation.Services.Auth
 
                 try
                 {
-                    var response = await wb.UploadValuesTaskAsync(new Uri("http://localhost:49586/api/auth/generate"), "POST", new NameValueCollection());
+                    var response = await wb.UploadValuesTaskAsync(new Uri(_endPoint + "generate"), "POST", new NameValueCollection());
                     var responseString = System.Text.Encoding.UTF8.GetString(response);
                     var tokenInfo = JsonConvert.DeserializeObject<TokenInfo>(responseString);
 
