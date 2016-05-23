@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AuthApi.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
@@ -21,7 +22,7 @@ namespace AuthApi
             );
 
             config.Formatters.XmlFormatter.UseXmlSerializer = true;
-            //config.Formatters.JsonFormatter.UseDataContractJsonSerializer = true;
+            config.Filters.Add(new ExceptionHandlingAttribute());
         }
     }
 }
