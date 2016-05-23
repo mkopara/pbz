@@ -7,6 +7,7 @@ using System.Security.Principal;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Web;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
 
@@ -38,7 +39,7 @@ namespace AuthAtrributes
         /// Checks basic authentication request
         /// </summary>
         /// <param name="filterContext"></param>
-        public override void OnAuthorization(HttpActionContext filterContext)
+        public override async Task OnAuthorizationAsync(HttpActionContext filterContext, CancellationToken cancellationToken)
         {
             if (!_isActive) return;
             var identity = FetchAuthHeader(filterContext);
@@ -48,13 +49,15 @@ namespace AuthAtrributes
                 return;
             }
             var genericPrincipal = new GenericPrincipal(identity, null);
-            Thread.CurrentPrincipal = genericPrincipal;
-            if (!OnAuthorizeUser(identity.Name, identity.Password, filterContext))
+            HttpContext.Current.User = genericPrincipal;
+            Thread.CurrentPrincipal = HttpContext.Current.User;
+            if (!await OnAuthorizeUserAsync(identity.Name, identity.Password, filterContext))
             {
                 ChallengeAuthRequest(filterContext);
                 return;
             }
             base.OnAuthorization(filterContext);
+
         }
 
         /// <summary>
@@ -64,11 +67,11 @@ namespace AuthAtrributes
         /// <param name="pass"></param>
         /// <param name="filterContext"></param>
         /// <returns></returns>
-        protected virtual bool OnAuthorizeUser(string user, string pass, HttpActionContext filterContext)
+        protected virtual Task<bool> OnAuthorizeUserAsync(string user, string pass, HttpActionContext filterContext)
         {
             if (string.IsNullOrEmpty(user) || string.IsNullOrEmpty(pass))
-                return false;
-            return true;
+                return  Task.FromResult<bool>(false);
+            return  Task.FromResult<bool>(true);
         }
 
         /// <summary>

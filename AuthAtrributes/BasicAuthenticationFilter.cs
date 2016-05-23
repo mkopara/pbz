@@ -37,14 +37,14 @@ namespace AuthAtrributes
         /// <param name="password"></param>
         /// <param name="actionContext"></param>
         /// <returns></returns>
-        protected override bool OnAuthorizeUser(string username, string password, HttpActionContext actionContext)
+        protected override async Task<bool> OnAuthorizeUserAsync(string username, string password, HttpActionContext actionContext)
         {
             var provider = actionContext.ControllerContext.Configuration
                                .DependencyResolver.GetService(typeof(IAuthApiService)) as IAuthApiService;
             if (provider != null)
             {
 
-                var userToken = Task.Run(() => provider.Authenticate(username, password)).Result;
+                var userToken = await provider.Authenticate(username, password);
                 if (userToken != null)
                 {
                     var basicAuthenticationIdentity = Thread.CurrentPrincipal.Identity as BasicAuthenticationIdentity;

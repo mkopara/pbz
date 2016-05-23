@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Web.Http.Controllers;
 using System.Web.Http.Filters;
@@ -16,7 +17,7 @@ namespace AuthAtrributes
     {
         private const string Token = "Token";
 
-        public override void OnActionExecuting(HttpActionContext filterContext)
+        public override async Task OnActionExecutingAsync(HttpActionContext filterContext, CancellationToken cancellationToken)
         {
             //  Get API key provider
             var provider = filterContext.ControllerContext.Configuration
@@ -26,7 +27,7 @@ namespace AuthAtrributes
             {
                 var tokenValue = filterContext.Request.Headers.GetValues(Token).First();
 
-                TokenInfo token = Task.Run(() => provider.ValidateToken(tokenValue)).Result;
+                TokenInfo token = await provider.ValidateToken(tokenValue);
                 // Validate Token
                 if (tokenValue == null)
                 {

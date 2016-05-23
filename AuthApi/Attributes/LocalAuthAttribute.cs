@@ -37,7 +37,7 @@ namespace AuthApi.Attributes
         /// <param name="password"></param>
         /// <param name="actionContext"></param>
         /// <returns></returns>
-        protected override bool OnAuthorizeUser(string username, string password, HttpActionContext actionContext)
+        protected override async Task<bool> OnAuthorizeUserAsync(string username, string password, HttpActionContext actionContext)
         {
             var provider = actionContext.ControllerContext.Configuration
                                .DependencyResolver.GetService(typeof(IUserService)) as IUserService;
@@ -45,12 +45,13 @@ namespace AuthApi.Attributes
             {
                 try
                 {
-                    var tokenInfo = Task.Run(() => provider.Authenticate(username, password)).Result;
+                    var tokenInfo = await provider.Authenticate(username, password);
                     if (tokenInfo != null)
                     {
                         var basicAuthenticationIdentity = Thread.CurrentPrincipal.Identity as BasicAuthenticationIdentity;
                         if (basicAuthenticationIdentity != null)
                             basicAuthenticationIdentity.TokenInfo = tokenInfo;
+                        
                         return true;
                     }
                 }
