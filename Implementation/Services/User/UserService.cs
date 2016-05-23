@@ -81,6 +81,12 @@ namespace Implementation.User.Services
             if (dbToken == null)
                 return null;
 
+            //prolong token expiration
+            dbToken.ExpiresOn = DateTime.Now.AddSeconds(double.Parse(ConfigurationManager.AppSettings["AuthTokenExpirySeconds"]));
+
+            await _unitOfWork.SaveAsync();
+
+
             return new TokenInfo(dbToken);
 
         }
