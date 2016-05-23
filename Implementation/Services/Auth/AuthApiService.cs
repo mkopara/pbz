@@ -21,6 +21,7 @@ namespace Implementation.Services.Auth
 
         public AuthApiService()
         {
+            //read security api enpoint from webconfig
             _endPoint = ConfigurationManager.AppSettings["SecurityEndpoint"];
 
             if (_endPoint == null)
@@ -30,7 +31,7 @@ namespace Implementation.Services.Auth
         {
             using (var wb = new WebClient())
             {
-
+                //set headers to token based authentication
                 var data = new NameValueCollection();
                 data["token"] = token;
                
@@ -47,9 +48,9 @@ namespace Implementation.Services.Auth
                 }
                 catch (WebException ex)
                 {
-                    //var statusCode = ((HttpWebResponse)ex.Response).StatusCode;
-                    return null;
                     //returning null if not authenticated
+                    return null;
+                   
                 }
 
             }
@@ -65,6 +66,8 @@ namespace Implementation.Services.Auth
                 var base64 = System.Convert.ToBase64String(plainTextBytes);
 
                 var data = new NameValueCollection();
+
+                //set header to basic authorization
                 data["Authorization"] = "Basic " + base64;
                 //data["password"] = "myPassword";
                 wb.Headers.Add(data);
@@ -83,8 +86,9 @@ namespace Implementation.Services.Auth
                 catch (WebException ex)
                 {
                     //var statusCode = ((HttpWebResponse)ex.Response).StatusCode;
+                    //returning null if not authenticated
                     return null;
-                  //returning null if not authenticated
+                 
                 }
 
             }
